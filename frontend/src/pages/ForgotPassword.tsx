@@ -5,10 +5,11 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // backend call will be added later
-    console.log("Send OTP to:", email);
-  };
+  e.preventDefault();
+  console.log("OTP sent to:", email);
+  window.location.href = "/reset-password";
+}; // temporary
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-100 px-4">
