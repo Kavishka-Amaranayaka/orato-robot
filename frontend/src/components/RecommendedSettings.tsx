@@ -1,7 +1,7 @@
-
 import { Volume2, TrendingUp, Eye, Bell } from 'lucide-react';
 
 const RecommendedSettings = () => {
+    // Array containing recommendation objects with metadata for display and styling
     const recommendations = [
         {
             title: 'Enable Voice Feedback',
@@ -43,10 +43,12 @@ const RecommendedSettings = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            {/* Header section providing context for the recommendations */}
             <div className="mb-2">
                 <p className="text-slate-500 font-medium text-sm">Based on your usage, we recommend these settings to enhance your experience</p>
             </div>
 
+            {/* Grid layout for displaying recommendation cards */}
             <div className="grid gap-5">
                 {recommendations.map((item, index) => (
                     <div
@@ -54,9 +56,12 @@ const RecommendedSettings = () => {
                         className={`${item.bgColor} rounded-[2rem] p-8 flex items-start justify-between border border-white/50 shadow-sm transition-all hover:scale-[1.01]`}
                     >
                         <div className="flex gap-6">
+                            {/* Icon container with dynamic background color and shadow */}
                             <div className={`${item.iconBg} p-3 rounded-xl shadow-lg shadow-black/5`}>
                                 <item.icon className="text-white w-6 h-6" />
                             </div>
+
+                            {/* Content container including title, description, and action button */}
                             <div className="space-y-4">
                                 <div>
                                     <h4 className="font-bold text-slate-800 text-lg">{item.title}</h4>

@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import Language from './components/Language';
 import AppPreferences from './components/AppPreferences';
 import Notifications from './components/Notifications';
+import Security from './components/Security';
 import RecommendedSettings from './components/RecommendedSettings';
 import { Mail, Edit2, Key, User, Bot, Settings } from 'lucide-react';
 
@@ -72,22 +73,11 @@ export default function App() {
       case 'Notifications':
         return <Notifications />;
 
+      case 'Security & Privacy':
+        return <Security />;
+
       case 'Recommended Settings':
         return <RecommendedSettings />;
-
-      // built yet
-      default:
-        return (
-          <div className="bg-white rounded-[2.5rem] p-20 shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center space-y-4">
-            <div className="bg-slate-50 p-6 rounded-full">
-              <Settings className="w-12 h-12 text-slate-300 animate-spin-slow" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-slate-800">{activeTab}</h3>
-              <p className="text-slate-500 mt-2">This module is currently under development.</p>
-            </div>
-          </div>
-        );
     }
   };
 
