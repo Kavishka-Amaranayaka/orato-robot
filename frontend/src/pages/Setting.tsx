@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import LanguagePreferences from '../components/Languagepreferences'; // For importing Language Preferences component.
-
+import Notifications from '../components/Notifications';
 
 
 
@@ -19,6 +19,7 @@ const Settings: React.FC = () => {
         {/* Settings Sections */}
         <div className="space-y-6">
           <LanguagePreferences />
+          <Notifications />
         </div>
       </div>
     </div>
