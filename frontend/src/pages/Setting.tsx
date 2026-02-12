@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import LanguagePreferences from '../components/Languagepreferences'; // For importing Language Preferences component.
 import Notifications from '../components/Notifications'; // For importing Notifications component.
 import AudioDisplay from '../components/AudioDisplay'; // For importing Audio Display component.
-
+import PrivacyData from '../components/PrivacyData'; // For importing Privacy & Data component.
 
 
 const Settings: React.FC = () => {
@@ -22,6 +22,7 @@ const Settings: React.FC = () => {
           <LanguagePreferences />
           <Notifications />
           <AudioDisplay />
+          <PrivacyData />
         </div>
       </div>
     </div>
