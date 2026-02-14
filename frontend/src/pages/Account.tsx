@@ -21,7 +21,6 @@ const Account: React.FC = () => {
           {/* TOP ROW */}
           <div className="flex justify-between items-start mb-6">
 
-            {/* LEFT */}
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center text-white text-3xl font-bold">
                 JD
@@ -33,7 +32,6 @@ const Account: React.FC = () => {
               </div>
             </div>
 
-            {/* BUTTON */}
             <button className="border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100">
               Edit Profile
             </button>
@@ -65,6 +63,36 @@ const Account: React.FC = () => {
           </div>
         </div>
 
+        {/* LEARNING GOALS */}
+        <div className="bg-white rounded-xl shadow p-6 mb-8">
+          <div className="flex justify-between mb-4">
+            <h2 className="text-2xl font-bold">Learning Goals</h2>
+            <button className="text-green-600 font-medium">+ Add Goal</button>
+          </div>
+
+          <div className="space-y-4">
+
+            <div className="border rounded-lg p-4">
+              <h3 className="font-semibold">Achieve fluency in English</h3>
+              <p className="text-sm text-gray-500">Target: 2026-12-31</p>
+              <div className="w-full bg-gray-200 h-2 rounded mt-2">
+                <div className="bg-green-600 h-2 rounded w-2/3"></div>
+              </div>
+              <p className="text-sm mt-1">65% complete</p>
+            </div>
+
+            <div className="border rounded-lg p-4">
+              <h3 className="font-semibold">Master English pronunciation</h3>
+              <p className="text-sm text-gray-500">Target: 2026-06-30</p>
+              <div className="w-full bg-gray-200 h-2 rounded mt-2">
+                <div className="bg-green-600 h-2 rounded w-1/2"></div>
+              </div>
+              <p className="text-sm mt-1">40% complete</p>
+            </div>
+
+          </div>
+        </div>
+
       </main>
 
       <Footer />
@@ -84,30 +112,4 @@ export default Account;
 
 
 
-
-
-
-
-// Default code 
-
-// import React from 'react';
-// import Navbar from '../components/Navbar';
-// import Footer from '../components/Footer';
-
-// const Account: React.FC = () => {
-//   return (
-//     <div className="page-wrapper">
-//       <Navbar isLoggedIn={true} />
-      
-//       <main className="page-container flex justify-center items-center">
-//         <h1 className="text-4xl font-bold text-text-dark mt-20 mb-10">Account Page</h1>
-        
-//       </main>
-      
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default Account;
 
