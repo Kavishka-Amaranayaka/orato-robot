@@ -10,8 +10,10 @@ const Account: React.FC = () => {
       <main className="max-w-6xl mx-auto px-4 py-10 space-y-8">
 
         {/* HEADER */}
-        <div className="pb-2 border-b border-gray-200">
-          <h1 className="text-4xl font-bold text-gray-800">Account</h1>
+        <div className="pb-3 border-b border-gray-200">
+          <h1 className="text-4xl font-bold tracking-tight text-gray-800">
+            Account
+          </h1>
           <p className="text-gray-500 mt-1">
             Manage your profile and learning preferences
           </p>
@@ -22,7 +24,7 @@ const Account: React.FC = () => {
 
           <div className="flex flex-wrap justify-between items-start gap-4 mb-6">
 
-            <div className="flex items-center gap-4 relative">
+            <div className="flex items-center gap-4">
               <div className="relative">
                 <div className="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center text-white text-3xl font-bold shadow">
                   JD
@@ -54,7 +56,7 @@ const Account: React.FC = () => {
             ].map(([icon, label, value]) => (
               <div
                 key={label}
-                className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition border border-gray-100"
+                className="bg-gray-50 rounded-xl p-4 border border-gray-100 hover:bg-gray-100 transition"
               >
                 <p className="text-lg">{icon}</p>
                 <p className="text-sm text-gray-500">{label}</p>
@@ -79,14 +81,13 @@ const Account: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-
               {[
                 ["Achieve fluency in English", "2026-12-31", "65%"],
                 ["Master English pronunciation", "2026-06-30", "50%"],
               ].map(([title, date, progress]) => (
                 <div
                   key={title}
-                  className="border rounded-xl p-4 hover:shadow-sm transition bg-white"
+                  className="border rounded-xl p-4 bg-white hover:shadow-sm transition"
                 >
                   <p className="font-semibold text-gray-800">{title}</p>
                   <p className="text-sm text-gray-500">Target: {date}</p>
@@ -110,7 +111,7 @@ const Account: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-lg transition duration-300">
             <h3 className="text-2xl font-bold mb-4 text-gray-800">Languages</h3>
 
-            <div className="border rounded-xl p-4 space-y-3 hover:shadow-sm transition bg-white">
+            <div className="border rounded-xl p-4 space-y-3 bg-white hover:shadow-sm transition">
               <div>
                 <p className="font-semibold text-gray-800">English</p>
                 <p className="text-sm text-gray-500">Intermediate (B1)</p>
@@ -147,7 +148,7 @@ const Account: React.FC = () => {
             ].map((badge) => (
               <div
                 key={badge}
-                className="border rounded-xl p-4 text-center hover:shadow-md hover:-translate-y-1 transition duration-300 cursor-pointer bg-gray-50"
+                className="border rounded-xl p-4 text-center bg-gray-50 hover:shadow-md hover:-translate-y-1 transition duration-300 cursor-pointer"
               >
                 <p className="font-semibold text-sm text-gray-700">{badge}</p>
               </div>
