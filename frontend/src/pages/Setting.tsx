@@ -11,10 +11,7 @@ import AccountActions from '../components/AccountActions'; // For importing Acco
 import backgroundImage from '../assets/settingbg.jpg'
 const Settings: React.FC = () => {
     return (
-        <div
-            className="min-h-screen bg-cover bg-center bg-fixed py-8 px-4 sm:px-6 lg:px-8"
-            style={{ backgroundImage: `url(${backgroundImage})` }}
-        >
+        <div className="min-h-screen bg-[url(C:\Users\User\orato\frontend\src\assets\roszie-grass-7424717.jpg)] bg-cover bg-center bg-fixed py-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
                 {/* Page Header */}
                 <div className="mb-8">
