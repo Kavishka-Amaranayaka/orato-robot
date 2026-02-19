@@ -1,6 +1,9 @@
 import Settings from '../models/settings.model.js';
 import User from '../models/user.js';
 
+// GET /api/settings/userId.
+// Loads user settings.
+// Creates settings with default values if not found.
 export const getSettings = async (req, res) => {
     try {
         let settings = await Settings.findOne({ userId: req.params.userId });
@@ -13,6 +16,11 @@ export const getSettings = async (req, res) => {
     }
 };
 
+/*
+// PUT /api/settings/userId.
+// Updating Notifications or AudioDisplay settings.
+// Body example: { "notifications": { "pushNotifications": false } }.
+*/
 export const updateSettings = async (req, res) => {
     try {
         const settings = await Settings.findOneAndUpdate(
@@ -26,6 +34,10 @@ export const updateSettings = async (req, res) => {
     }
 };
 
+/*
+// DELETE /api/settings/userId.
+// Deletes both the user account and settings.
+*/
 export const deleteAccount = async (req, res) => {
     try {
         await Settings.findOneAndDelete({ userId: req.params.userId });
@@ -36,6 +48,10 @@ export const deleteAccount = async (req, res) => {
     }
 };
 
+/*
+// GET /api/settings/userId/download.
+// Download user data and settings.
+*/
 export const downloadUserData = async (req, res) => {
     try {
         const user = await User.findById(req.params.userId).select('-password');
