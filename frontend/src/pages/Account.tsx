@@ -294,7 +294,7 @@ const Account: React.FC = () => {
 
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                About
+                Personal Overview
               </h3>
 
               <span className="text-xs text-gray-400">
@@ -352,7 +352,10 @@ const Account: React.FC = () => {
       <Footer />
 
       {isEditOpen && (
-        <EditProfileModal onClose={() => setIsEditOpen(false)} />
+        <EditProfileModal
+          onClose={() => setIsEditOpen(false)}
+          onProfileUpdate={(updatedUser: any) => setUser(updatedUser)}
+        />
       )}
 
       {isAddGoalOpen && (

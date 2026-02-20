@@ -3,9 +3,10 @@ import API from "../services/api";
 
 interface Props {
     onClose: () => void;
+    onProfileUpdate: (user: any) => void;
 }
 
-const EditProfileModal: React.FC<Props> = ({ onClose }) => {
+const EditProfileModal: React.FC<Props> = ({ onClose, onProfileUpdate }) => {
     const [show, setShow] = useState(false);
 
     const [fullName, setFullName] = useState("");
@@ -46,9 +47,8 @@ const EditProfileModal: React.FC<Props> = ({ onClose }) => {
 
             // Update local storage with new user data
             localStorage.setItem("user", JSON.stringify(response.data.user));
-
+            onProfileUpdate(response.data.user);
             handleClose();
-            window.location.reload();
 
         } catch (error) {
             console.error("Profile update failed:", error);
