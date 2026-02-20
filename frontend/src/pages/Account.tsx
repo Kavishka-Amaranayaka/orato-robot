@@ -236,27 +236,36 @@ const Account: React.FC = () => {
         </div>
 
         {/* PROFILE CARD */}
-        <section className="bg-white rounded-2xl shadow-md p-6">
+        <section className="bg-white rounded-2xl shadow-md p-8">
 
-          <div className="flex flex-wrap justify-between items-start gap-4 mb-6">
+          {/* TOP ROW */}
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
 
-            <div className="flex items-center gap-4">
+            {/* LEFT SIDE */}
+            <div className="flex items-start gap-6">
+
+              {/* Avatar */}
               <div className="relative">
-                <div className="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center text-white text-3xl font-bold shadow">
+                <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center text-white text-4xl font-semibold shadow-md">
                   {initials}
                 </div>
 
-                <div className="absolute -bottom-1 -right-1 bg-white border rounded-full w-7 h-7 flex items-center justify-center text-xs shadow">
+                <div className="absolute bottom-0 right-0 bg-white border rounded-full w-8 h-8 flex items-center justify-center text-sm shadow cursor-pointer hover:bg-gray-100 transition">
                   📷
                 </div>
               </div>
 
-              <div>
-                <h2 className="text-3xl font-bold text-gray-800">
+              {/* Name + Email + Joined */}
+              <div className="space-y-2">
+                <h2 className="text-3xl font-semibold text-gray-900">
                   {user.fullName}
                 </h2>
-                <p className="text-gray-500">{user.email}</p>
-                <p className="text-sm text-gray-400 mt-1">
+
+                <p className="text-gray-500 text-sm">
+                  {user.email}
+                </p>
+
+                <p className="text-sm text-gray-400">
                   Joined: {user.createdAt
                     ? new Date(user.createdAt).toLocaleDateString("en-LK", {
                       year: "numeric",
@@ -268,16 +277,41 @@ const Account: React.FC = () => {
               </div>
             </div>
 
+            {/* EDIT BUTTON */}
             <button
               onClick={() => setIsEditOpen(true)}
-              className="border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100 transition font-medium"
+              className="border border-gray-300 px-5 py-2 rounded-lg hover:bg-gray-100 transition font-medium self-start"
             >
               Edit Profile
             </button>
           </div>
 
+          {/* About */}
+          <div
+            onDoubleClick={() => setIsEditOpen(true)}
+            className="mt-10 bg-gray-50 rounded-xl p-6 border border-gray-100 hover:bg-gray-100 transition"
+          >
+
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                About
+              </h3>
+
+              <span className="text-xs text-gray-400">
+                Double click to edit
+              </span>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+              <p className="text-gray-700 leading-relaxed">
+                {user.bio || "Double click here to add a bio."}
+              </p>
+            </div>
+
+          </div>
+
           {/* STATS */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-gray-50 rounded-xl p-4 border">
               <p className="text-lg">🎯</p>
               <p className="text-sm text-gray-500">Current Level</p>
@@ -310,6 +344,7 @@ const Account: React.FC = () => {
               </p>
             </div>
           </div>
+
         </section>
 
       </main>

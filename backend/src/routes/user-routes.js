@@ -1,23 +1,26 @@
 import express from "express";
+import protect from "../middleware/authMiddleware.js";
 import {
   getAllUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  getProfile,
+  updateProfile
 } from "../controllers/user-controller.js";
 
 const router = express.Router();
 
-// READ - Get all users
+/* ================= AUTHENTICATED USER ================= */
+
+router.get("/profile", protect, getProfile);
+router.put("/profile", protect, updateProfile);
+
+/* ================= ADMIN CRUD ================= */
+
 router.get("/", getAllUsers);
-
-// READ - Get single user by ID
 router.get("/:id", getUserById);
-
-// UPDATE - Update user by ID
 router.put("/:id", updateUser);
-
-// DELETE - Delete user by ID
 router.delete("/:id", deleteUser);
 
 export default router;

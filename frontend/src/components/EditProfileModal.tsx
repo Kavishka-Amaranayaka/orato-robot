@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import API from "../services/api";
 
 interface Props {
     onClose: () => void;
@@ -7,8 +8,20 @@ interface Props {
 const EditProfileModal: React.FC<Props> = ({ onClose }) => {
     const [show, setShow] = useState(false);
 
+    const [fullName, setFullName] = useState("");
+    const [bio, setBio] = useState("");
+    const [targetLanguage, setTargetLanguage] = useState("English");
+
     useEffect(() => {
         setShow(true);
+
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            setFullName(user.fullName || "");
+            setBio(user.bio || "");
+            setTargetLanguage(user.targetLanguage || "English");
+        }
 
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === "Escape") handleClose();
@@ -20,7 +33,26 @@ const EditProfileModal: React.FC<Props> = ({ onClose }) => {
 
     const handleClose = () => {
         setShow(false);
-        setTimeout(() => onClose(), 200); // wait animation
+        setTimeout(() => onClose(), 200);
+    };
+
+    const handleSave = async () => {
+        try {
+            const response = await API.put("/users/profile", {
+                fullName,
+                bio,
+                targetLanguage,
+            });
+
+            // Update local storage with new user data
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+
+            handleClose();
+            window.location.reload();
+
+        } catch (error) {
+            console.error("Profile update failed:", error);
+        }
     };
 
     return (
@@ -46,7 +78,8 @@ const EditProfileModal: React.FC<Props> = ({ onClose }) => {
                         <label className="text-sm text-gray-600">Full Name</label>
                         <input
                             type="text"
-                            defaultValue="John Doe"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
                             className="w-full mt-1 border rounded-lg px-3 py-2"
                         />
                     </div>
@@ -55,15 +88,20 @@ const EditProfileModal: React.FC<Props> = ({ onClose }) => {
                         <label className="text-sm text-gray-600">Email</label>
                         <input
                             type="email"
-                            defaultValue="john.doe@example.com"
-                            className="w-full mt-1 border rounded-lg px-3 py-2"
+                            value={JSON.parse(localStorage.getItem("user") || "{}").email || ""}
+                            disabled
+                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-gray-100 text-gray-500"
                         />
                     </div>
 
                     <div>
                         <label className="text-sm text-gray-600">Learning Language</label>
-                        <select className="w-full mt-1 border rounded-lg px-3 py-2">
-                            <option>English</option>
+                        <select
+                            value={targetLanguage}
+                            onChange={(e) => setTargetLanguage(e.target.value)}
+                            className="w-full mt-1 border rounded-lg px-3 py-2"
+                        >
+                            <option value="English">English</option>
                             <option disabled>සිංහල (Coming Soon)</option>
                             <option disabled>தமிழ் (Coming Soon)</option>
                         </select>
@@ -74,7 +112,7 @@ const EditProfileModal: React.FC<Props> = ({ onClose }) => {
                             Current Level (Auto-calculated)
                         </label>
                         <div className="w-full mt-1 border rounded-lg px-3 py-2 bg-gray-100 text-gray-600">
-                            Intermediate (System Generated)
+                            {JSON.parse(localStorage.getItem("user") || "{}").skillLevel || "Beginner"}
                         </div>
                         <p className="text-xs text-gray-500 mt-1">
                             Level is generated automatically by the system.
@@ -85,6 +123,8 @@ const EditProfileModal: React.FC<Props> = ({ onClose }) => {
                         <label className="text-sm text-gray-600">Bio</label>
                         <textarea
                             rows={3}
+                            value={bio}
+                            onChange={(e) => setBio(e.target.value)}
                             className="w-full mt-1 border rounded-lg px-3 py-2 resize-none"
                         />
                     </div>
@@ -99,7 +139,10 @@ const EditProfileModal: React.FC<Props> = ({ onClose }) => {
                         Cancel
                     </button>
 
-                    <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                    <button
+                        onClick={handleSave}
+                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                    >
                         Save Changes
                     </button>
                 </div>
