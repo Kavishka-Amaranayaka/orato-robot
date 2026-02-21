@@ -1,3 +1,5 @@
+console.log("User routes file loaded");
+
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import {
@@ -13,17 +15,14 @@ import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
 
+router.put("/test-profile", (req, res) => {
+  res.json({ message: "Test route works" });
+});
+
 /* ================= AUTHENTICATED USER ================= */
 
 router.get("/profile", protect, getProfile);
 router.put("/profile", protect, updateProfile);
-
-/* ================= ADMIN CRUD ================= */
-
-router.get("/", getAllUsers);
-router.get("/:id", getUserById);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
 
 router.post(
   "/upload-profile-picture",
@@ -39,16 +38,18 @@ router.post(
         { folder: "profile_pictures" },
         async (error, result) => {
           if (error) {
-            return res.status(500).json({ message: "Upload failed" });
+            return res.status(500).json({ message: error.message });
           }
 
-          // 🔥 THIS IS THE NEW PART
-          req.user.profilePicture = result.secure_url;
-          await req.user.save();
+          // use middleware user directly
+          const user = req.user;
+          user.profilePicture = result.secure_url;
+          await user.save();
 
-          res.json({
+          res.status(200).json({
+            success: true,
             message: "Profile picture updated",
-            profilePicture: result.secure_url,
+            user,
           });
         }
       );
@@ -56,9 +57,17 @@ router.post(
       stream.end(req.file.buffer);
 
     } catch (error) {
-      res.status(500).json({ message: "Server error" });
+      res.status(500).json({ message: error.message });
     }
   }
 );
+
+/* ================= ADMIN CRUD ================= */
+/* Keep parameter routes ALWAYS at bottom */
+
+router.get("/", getAllUsers);
+router.get("/:id", getUserById);
+router.put("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 export default router;

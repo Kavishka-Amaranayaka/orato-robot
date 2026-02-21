@@ -97,16 +97,11 @@ export const getProfile = async (req, res) => {
   }
 };
 
-// ✅ Update logged-in user's profile
 export const updateProfile = async (req, res) => {
   try {
     const { fullName, targetLanguage, bio } = req.body;
 
-    const user = await User.findById(req.user.userId);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    const user = req.user; // <-- use existing user
 
     if (fullName) user.fullName = fullName;
     if (targetLanguage) user.targetLanguage = targetLanguage;

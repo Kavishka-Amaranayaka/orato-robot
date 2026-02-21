@@ -194,6 +194,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import EditProfileModal from "../components/EditProfileModal";
 import AddGoalModal from "../components/AddGoalModal";
+import API from "../services/api";
 
 const Account: React.FC = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -206,6 +207,32 @@ const Account: React.FC = () => {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+  // ✅ PROFILE PICTURE UPLOAD HANDLER
+  const handleImageUpload = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await API.post(
+        "/users/upload-profile-picture",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const updatedUser = response.data.user;
+
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
+    } catch (error) {
+      console.error("Upload failed:", error);
+    }
+  };
 
   if (!user) {
     return <div className="p-10 text-center">Loading account...</div>;
@@ -244,16 +271,34 @@ const Account: React.FC = () => {
             {/* LEFT SIDE */}
             <div className="flex items-start gap-6">
 
-              {/* Avatar */}
-              <div className="relative">
-                <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center text-white text-4xl font-semibold shadow-md">
-                  {initials}
-                </div>
+              {/* ✅ AVATAR WITH UPLOAD */}
+              <label className="relative cursor-pointer">
+                {user.profilePicture ? (
+                  <img
+                    src={user.profilePicture}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-full object-cover shadow-md"
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center text-white text-4xl font-semibold shadow-md">
+                    {initials}
+                  </div>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      handleImageUpload(e.target.files[0]);
+                    }
+                  }}
+                />
 
-                <div className="absolute bottom-0 right-0 bg-white border rounded-full w-8 h-8 flex items-center justify-center text-sm shadow cursor-pointer hover:bg-gray-100 transition">
+                <div className="absolute bottom-0 right-0 bg-white border rounded-full w-8 h-8 flex items-center justify-center text-sm shadow hover:bg-gray-100 transition">
                   📷
                 </div>
-              </div>
+              </label>
 
               {/* Name + Email + Joined */}
               <div className="space-y-2">
@@ -286,17 +331,15 @@ const Account: React.FC = () => {
             </button>
           </div>
 
-          {/* About */}
+          {/* Personal Overview */}
           <div
             onDoubleClick={() => setIsEditOpen(true)}
             className="mt-10 bg-gray-50 rounded-xl p-6 border border-gray-100 hover:bg-gray-100 transition"
           >
-
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
                 Personal Overview
               </h3>
-
               <span className="text-xs text-gray-400">
                 Double click to edit
               </span>
@@ -307,7 +350,6 @@ const Account: React.FC = () => {
                 {user.bio || "Double click here to add a bio."}
               </p>
             </div>
-
           </div>
 
           {/* STATS */}
