@@ -112,16 +112,9 @@ export const updateProfile = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Profile updated successfully",
-      user: {
-        id: user._id,
-        fullName: user.fullName,
-        email: user.email,
-        bio: user.bio,
-        targetLanguage: user.targetLanguage,
-        skillLevel: user.skillLevel,
-        createdAt: user.createdAt,
-      },
+      user,
     });
+
   } catch (error) {
     res.status(500).json({ message: "Failed to update profile" });
   }

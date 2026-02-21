@@ -34,22 +34,45 @@ router.post(
         return res.status(400).json({ message: "No file uploaded" });
       }
 
+      // Validate file type
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+      if (!allowedTypes.includes(req.file.mimetype)) {
+        return res.status(400).json({
+          message: "Only JPG, PNG, and WEBP files are allowed",
+        });
+      }
+
+      // Delete old profile picture if exists
+      if (req.user.profilePicture) {
+        const oldPublicId = req.user.profilePicture
+          .split("/")
+          .slice(-1)[0]
+          .split(".")[0];
+
+        await cloudinary.uploader.destroy(`profile_pictures/${oldPublicId}`);
+      }
+
+      // Upload new image (with resizing)
       const stream = cloudinary.uploader.upload_stream(
-        { folder: "profile_pictures" },
+        {
+          folder: "profile_pictures",
+          transformation: [{ width: 300, height: 300, crop: "fill" }],
+        },
         async (error, result) => {
           if (error) {
+            console.error("Cloudinary error:", error);
             return res.status(500).json({ message: error.message });
           }
 
-          // use middleware user directly
-          const user = req.user;
-          user.profilePicture = result.secure_url;
-          await user.save();
+          req.user.profilePicture = result.secure_url;
+          await req.user.save();
 
-          res.status(200).json({
+          const { password, ...safeUser } = req.user.toObject();
+
+          res.json({
             success: true,
             message: "Profile picture updated",
-            user,
+            user: safeUser,
           });
         }
       );
@@ -57,6 +80,7 @@ router.post(
       stream.end(req.file.buffer);
 
     } catch (error) {
+      console.error("Upload route error:", error);
       res.status(500).json({ message: error.message });
     }
   }
