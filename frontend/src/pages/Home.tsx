@@ -87,8 +87,6 @@ const Home = () => {
               From beginner to advanced, Orato adapts to your learning journey.
             </p>
 
-            
-
             {/* Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
               <div className="bg-white rounded-xl p-6 shadow-md">
