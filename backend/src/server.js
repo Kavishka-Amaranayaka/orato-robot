@@ -1,6 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth-routes.js";
 import otpRoutes from "./routes/otpRoutes.js";
@@ -8,6 +10,7 @@ import userRoutes from "./routes/user-routes.js";
 import assessmentRoutes from "./routes/assessment-routes.js";
 import settingsRoutes from "./routes/settings.routes.js";
 import { verifyEmailConfig } from "./services/emailService.js";
+import protect from "./middleware/authMiddleware.js";
 
 // Load env variables FIRST
 dotenv.config();
@@ -19,6 +22,11 @@ const app = express();
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+app.options("*", cors());
+
 }));
 app.use(express.json());
 
@@ -29,10 +37,17 @@ connectDB();
 verifyEmailConfig();
 
 // Routes
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/otp", otpRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/assessment", assessmentRoutes);
+app.get("/api/protected", protect, (req, res) => {
+  res.json({
+    message: "Protected route working!",
+    user: req.user,
+  });
+});
 app.use("/api/settings", settingsRoutes);
 
 // Test route
