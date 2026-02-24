@@ -196,6 +196,7 @@ import EditProfileModal from "../components/EditProfileModal";
 import AddGoalModal from "../components/AddGoalModal";
 import API from "../services/api";
 import toast from "react-hot-toast";
+import PageBackground from "../components/AccountPageBackground";
 
 const Account: React.FC = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -265,161 +266,184 @@ const Account: React.FC = () => {
     : "U";
 
   return (
-    <div className="min-h-screen bg-green-100">
+    <div className="page-wrapper">
       <Navbar isLoggedIn={true} />
 
-      <main className="max-w-6xl mx-auto px-4 py-10 space-y-8">
+      <PageBackground>
+        <main className="max-w-6xl mx-auto px-4 py-10 space-y-8">
 
-        {/* HEADER */}
-        <div className="pb-3 border-b border-gray-200">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-800">
-            Account
-          </h1>
-          <p className="text-gray-500 mt-1">
-            Manage your profile and learning preferences
-          </p>
-        </div>
+          {/* HEADER */}
+          <div className="pb-3 border-b border-white/20">
 
-        {/* PROFILE CARD */}
-        <section className="bg-white rounded-2xl shadow-md p-8">
+            <h1 className="text-5xl font-bold text-white">
+              Account
+            </h1>
 
-          {/* TOP ROW */}
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+            <p className="text-white/80 text-lg">
+              Manage your profile and learning preferences
+            </p>
+          </div>
 
-            {/* LEFT SIDE */}
-            <div className="flex items-start gap-6">
+          {/* PROFILE CARD */}
+          <section className="bg-white rounded-2xl shadow-md p-8">
 
-              {/* ✅ AVATAR WITH LOADING STATE */}
-              <label className="relative cursor-pointer">
+            {/* TOP ROW */}
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
 
-                {uploading ? (
-                  <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center animate-pulse shadow-md">
-                    <span className="text-sm text-gray-500">Uploading...</span>
-                  </div>
-                ) : user.profilePicture ? (
-                  <img
-                    src={user.profilePicture}
-                    alt="Profile"
-                    className="w-24 h-24 rounded-full object-cover shadow-md"
+              {/* LEFT SIDE */}
+              <div className="flex items-start gap-6">
+
+                {/* ✅ AVATAR WITH LOADING STATE */}
+                <label className="group relative cursor-pointer">
+                  {uploading ? (
+                    <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center animate-pulse shadow-md">
+                      <span className="text-sm text-gray-500">Uploading...</span>
+                    </div>
+                  ) : user.profilePicture ? (
+                    <img
+                      src={user.profilePicture}
+                      alt="Profile"
+                      className="w-24 h-24 rounded-full object-cover shadow-md 
+transition-all duration-300 
+group-hover:scale-105 group-hover:ring-4 group-hover:ring-emerald-400/40"                    />
+                  ) : (
+                    <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center 
+text-white text-4xl font-semibold shadow-md 
+transition-all duration-300 
+group-hover:scale-105 group-hover:ring-4 group-hover:ring-emerald-400/40">
+                      {initials}
+                    </div>
+                  )}
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    disabled={uploading}
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        handleImageUpload(e.target.files[0]);
+                      }
+                    }}
                   />
-                ) : (
-                  <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center text-white text-4xl font-semibold shadow-md">
-                    {initials}
-                  </div>
-                )}
 
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  disabled={uploading}
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      handleImageUpload(e.target.files[0]);
-                    }
-                  }}
-                />
+                  {!uploading && (
+                    <div className="absolute bottom-0 right-0 bg-white border rounded-full w-8 h-8 flex items-center justify-center text-sm shadow hover:bg-gray-100 transition">
+                      📷
+                    </div>
+                  )}
 
-                {!uploading && (
-                  <div className="absolute bottom-0 right-0 bg-white border rounded-full w-8 h-8 flex items-center justify-center text-sm shadow hover:bg-gray-100 transition">
-                    📷
-                  </div>
-                )}
+                </label>
 
-              </label>
+                {/* Name + Email + Joined */}
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-semibold text-gray-900">
+                    {user.fullName}
+                  </h2>
 
-              {/* Name + Email + Joined */}
-              <div className="space-y-2">
-                <h2 className="text-3xl font-semibold text-gray-900">
-                  {user.fullName}
-                </h2>
+                  <p className="text-gray-500 text-sm">
+                    {user.email}
+                  </p>
 
-                <p className="text-gray-500 text-sm">
-                  {user.email}
-                </p>
+                  <p className="text-sm text-gray-400">
+                    Joined: {user.createdAt
+                      ? new Date(user.createdAt).toLocaleDateString("en-LK", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })
+                      : "N/A"}
+                  </p>
+                </div>
+              </div>
 
-                <p className="text-sm text-gray-400">
-                  Joined: {user.createdAt
-                    ? new Date(user.createdAt).toLocaleDateString("en-LK", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })
-                    : "N/A"}
+              {/* EDIT BUTTON */}
+              <button
+                onClick={() => setIsEditOpen(true)}
+                className="border border-gray-300 px-5 py-2 rounded-lg hover:bg-gray-100 transition font-medium self-start"
+              >
+                Edit Profile
+              </button>
+            </div>
+
+            {/* Personal Overview */}
+            <div
+              onDoubleClick={() => setIsEditOpen(true)}
+              className="mt-10 bg-gray-50 rounded-xl p-6 border border-gray-100 hover:bg-gray-100 transition"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                  Personal Overview
+                </h3>
+                <span className="text-xs text-gray-400">
+                  Double click to edit
+                </span>
+              </div>
+
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <p className="text-gray-700 leading-relaxed">
+                  {user.bio || "Double click here to add a bio."}
                 </p>
               </div>
             </div>
 
-            {/* EDIT BUTTON */}
-            <button
-              onClick={() => setIsEditOpen(true)}
-              className="border border-gray-300 px-5 py-2 rounded-lg hover:bg-gray-100 transition font-medium self-start"
-            >
-              Edit Profile
-            </button>
-          </div>
+            {/* STATS */}
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-          {/* Personal Overview */}
-          <div
-            onDoubleClick={() => setIsEditOpen(true)}
-            className="mt-10 bg-gray-50 rounded-xl p-6 border border-gray-100 hover:bg-gray-100 transition"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                Personal Overview
-              </h3>
-              <span className="text-xs text-gray-400">
-                Double click to edit
-              </span>
+              {/* <div className="bg-gray-50 rounded-xl p-4 border"> */}
+              <div className="bg-gray-50 rounded-xl p-4 border 
+transition-all duration-300 
+hover:-translate-y-1 hover:shadow-lg 
+hover:border-emerald-400 cursor-pointer">
+                <p className="text-lg">🎯</p>
+                <p className="text-sm text-gray-500">Current Level</p>
+                <p className="font-bold text-xl mt-1 text-gray-800">
+                  {user.skillLevel || "Beginner"}
+                </p>
+              </div>
+
+              {/* <div className="bg-gray-50 rounded-xl p-4 border"> */}
+              <div className="bg-gray-50 rounded-xl p-4 border 
+transition-all duration-300 
+hover:-translate-y-1 hover:shadow-lg 
+hover:border-emerald-400 cursor-pointer">
+                <p className="text-lg">🌍</p>
+                <p className="text-sm text-gray-500">Target Language</p>
+                <p className="font-bold text-xl mt-1 text-gray-800">
+                  {user.targetLanguage || "English"}
+                </p>
+              </div>
+
+              {/* <div className="bg-gray-50 rounded-xl p-4 border"> */}
+              <div className="bg-gray-50 rounded-xl p-4 border 
+transition-all duration-300 
+hover:-translate-y-1 hover:shadow-lg 
+hover:border-emerald-400 cursor-pointer">
+                <p className="text-lg">📘</p>
+                <p className="text-sm text-gray-500">Daily Goal</p>
+                <p className="font-bold text-xl mt-1 text-gray-800">
+                  {user.dailyGoalMinutes || 15} min/day
+                </p>
+              </div>
+
+              {/* <div className="bg-gray-50 rounded-xl p-4 border"> */}
+              <div className="bg-gray-50 rounded-xl p-4 border 
+transition-all duration-300 
+hover:-translate-y-1 hover:shadow-lg 
+hover:border-emerald-400 cursor-pointer">
+                <p className="text-lg">🏆</p>
+                <p className="text-sm text-gray-500">Assessment Score</p>
+                <p className="font-bold text-xl mt-1 text-gray-800">
+                  {user.assessmentScore || 0}
+                </p>
+              </div>
+
             </div>
 
-            <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-              <p className="text-gray-700 leading-relaxed">
-                {user.bio || "Double click here to add a bio."}
-              </p>
-            </div>
-          </div>
+          </section>
 
-          {/* STATS */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-
-            <div className="bg-gray-50 rounded-xl p-4 border">
-              <p className="text-lg">🎯</p>
-              <p className="text-sm text-gray-500">Current Level</p>
-              <p className="font-bold text-xl mt-1 text-gray-800">
-                {user.skillLevel || "Beginner"}
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-4 border">
-              <p className="text-lg">🌍</p>
-              <p className="text-sm text-gray-500">Target Language</p>
-              <p className="font-bold text-xl mt-1 text-gray-800">
-                {user.targetLanguage || "English"}
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-4 border">
-              <p className="text-lg">📘</p>
-              <p className="text-sm text-gray-500">Daily Goal</p>
-              <p className="font-bold text-xl mt-1 text-gray-800">
-                {user.dailyGoalMinutes || 15} min/day
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-4 border">
-              <p className="text-lg">🏆</p>
-              <p className="text-sm text-gray-500">Assessment Score</p>
-              <p className="font-bold text-xl mt-1 text-gray-800">
-                {user.assessmentScore || 0}
-              </p>
-            </div>
-
-          </div>
-
-        </section>
-
-      </main>
+        </main>
+      </PageBackground>
 
       <Footer />
 
@@ -429,15 +453,16 @@ const Account: React.FC = () => {
           onProfileUpdate={(updatedUser: any) => {
             setUser(updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
-          }} />
+          }}
+        />
       )}
 
       {isAddGoalOpen && (
         <AddGoalModal onClose={() => setIsAddGoalOpen(false)} />
       )}
-
     </div>
   );
 };
+
 
 export default Account;
