@@ -75,6 +75,23 @@ const Account: React.FC = () => {
       .toUpperCase()
     : "U";
 
+  const goals = [
+    {
+      id: 1,
+      title: "Improve Speaking to 70%",
+      target: 70,
+      current: user.speakingLevel || 80,
+      deadline: "2026-08-30",
+    },
+    {
+      id: 2,
+      title: "Maintain 30-Day Streak",
+      target: 30,
+      current: user.streak || 40,
+      deadline: "2025-07-15",
+    },
+  ];
+
   return (
     <div className="page-wrapper">
       <Navbar isLoggedIn={true} />
@@ -179,15 +196,14 @@ group-hover:scale-105 group-hover:ring-4 group-hover:ring-emerald-400/40">
             {/* Personal Overview */}
             <div
               onDoubleClick={() => setIsEditOpen(true)}
-              className="mt-10 bg-gray-50 rounded-xl p-6 border border-gray-100 hover:bg-gray-100 transition"
-            >
+              className="group mt-10 bg-gray-50 rounded-xl p-6 border border-gray-100 hover:bg-gray-100 transition flex flex-col min-h-[20px]"            >
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
                   Personal Overview
                 </h3>
-                <span className="text-xs text-gray-400">
+                <p className="text-xs text-gray-400 mt-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Double click to edit
-                </span>
+                </p>
               </div>
 
               <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
@@ -273,14 +289,109 @@ hover:tracking-wide"              >
 
             <div
               onDoubleClick={() => setIsLanguageOpen(true)}
-              className="bg-gray-50 rounded-xl p-6 border cursor-pointer hover:bg-gray-100 transition"
+              className="group bg-gray-50 rounded-xl p-6 border cursor-pointer 
+             hover:bg-gray-100 transition-all duration-200"
             >
               <p className="text-gray-800 font-semibold">
                 Native Speaker → English
               </p>
+
               <p className="text-sm text-gray-500 mt-2">
                 {user.skillLevel || "Beginner"}
               </p>
+
+              {/* Hover hint */}
+              <p className="text-xs text-gray-400 mt-3 opacity-0 
+                group-hover:opacity-100 transition-opacity duration-200">
+                Double click to add language
+              </p>
+            </div>
+          </section>
+
+          {/* Learning Goals */}
+          <section className="bg-white rounded-2xl shadow-md p-8">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold text-gray-800">
+                Learning Goals
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              {goals.map((goal) => {
+
+                const progress = Math.min(
+                  (goal.current / goal.target) * 100,
+                  100
+                );
+
+                const today = new Date();
+                const deadlineDate = new Date(goal.deadline);
+
+                const isExpired = today > deadlineDate;
+                const isCompleted = goal.current >= goal.target;
+
+                return (
+                  <div key={goal.id} className="bg-gray-50 rounded-xl p-6 border">
+
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-semibold text-gray-800">
+                        {goal.title}
+                      </h3>
+
+                      {isCompleted && (
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded animate-fadeIn">
+                          ✔ Completed
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-sm text-gray-500 mt-2">
+                      Current: {goal.current}
+                    </p>
+
+                    <div className="mt-4 h-2 bg-gray-200 rounded-full">
+                      <div
+                        className={`h-2 rounded-full transition-all duration-1000 ease-out ${isCompleted ? "bg-green-500" : isExpired ? "bg-red-500" : "bg-emerald-500"
+                          }`}
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+
+                    <p className="text-xs text-gray-400 mt-2">
+                      Target: {goal.target}
+                    </p>
+
+                    <p className="text-xs text-gray-400 mt-1">
+                      Deadline: {deadlineDate.toLocaleDateString()}
+                    </p>
+
+                    {isExpired && !isCompleted && (
+                      <p className="text-xs text-red-500 mt-1">
+                        Goal expired
+                      </p>
+                    )}
+
+                  </div>
+                );
+              })}
+
+
+              {/* Goal 3 — Vocabulary Coming Soon */}
+              <div className="bg-gray-50 rounded-xl p-6 border opacity-60 relative">
+                <h3 className="font-semibold text-gray-800">
+                  Learn 500 Vocabulary Words
+                </h3>
+
+                <p className="text-sm text-gray-500 mt-2">
+                  Vocabulary tracking coming soon
+                </p>
+
+                <span className="absolute top-4 right-4 text-xs bg-gray-200 px-2 py-1 rounded">
+                  Coming Soon
+                </span>
+              </div>
+
             </div>
           </section>
 
