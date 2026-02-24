@@ -13,11 +13,16 @@ const Account: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [goals, setGoals] = useState<any[]>([]);
+  const [editingGoal, setEditingGoal] = useState<any>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+
+      setGoals([]);
     }
   }, []);
 
@@ -67,6 +72,8 @@ const Account: React.FC = () => {
     return <div className="p-10 text-center">Loading account...</div>;
   }
 
+
+
   const initials = user.fullName
     ? user.fullName
       .split(" ")
@@ -75,22 +82,6 @@ const Account: React.FC = () => {
       .toUpperCase()
     : "U";
 
-  const goals = [
-    {
-      id: 1,
-      title: "Improve Speaking to 70%",
-      target: 70,
-      current: user.speakingLevel || 80,
-      deadline: "2026-08-30",
-    },
-    {
-      id: 2,
-      title: "Maintain 30-Day Streak",
-      target: 30,
-      current: user.streak || 40,
-      deadline: "2025-07-15",
-    },
-  ];
 
   return (
     <div className="page-wrapper">
@@ -314,9 +305,24 @@ hover:tracking-wide"              >
               <h2 className="text-2xl font-semibold text-gray-800">
                 Learning Goals
               </h2>
+
+              {goals.length < 3 && (
+                <button
+                  onClick={() => setIsAddGoalOpen(true)}
+                  className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition"
+                >
+                  + Add Goal
+                </button>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              {goals.length === 0 && (
+                <div className="col-span-full text-center py-12 text-gray-400">
+                  No goals added yet.
+                </div>
+              )}
 
               {goals.map((goal) => {
 
@@ -332,7 +338,13 @@ hover:tracking-wide"              >
                 const isCompleted = goal.current >= goal.target;
 
                 return (
-                  <div key={goal.id} className="bg-gray-50 rounded-xl p-6 border">
+                  <div key={goal.id} className="bg-gray-50 rounded-xl p-6 border relative">
+                    <button
+                      onClick={() => setEditingGoal(goal)}
+                      className="absolute top-4 right-4 text-gray-400 hover:text-gray-700"
+                    >
+                      ✏️
+                    </button>
 
                     <div className="flex justify-between items-center">
                       <h3 className="font-semibold text-gray-800">
@@ -358,9 +370,38 @@ hover:tracking-wide"              >
                       />
                     </div>
 
-                    <p className="text-xs text-gray-400 mt-2">
-                      Target: {goal.target}
-                    </p>
+                    <div className="text-xs text-gray-400 mt-2">
+
+
+                      {/* Expanding slider */}
+                      <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-20">
+
+                        <div className="mt-3 flex items-center gap-3">
+                          <input
+                            type="range"
+                            min="1"
+                            max={goal.id === 1 ? 100 : 60}
+                            value={goal.target}
+                            onChange={(e) => {
+                              const newTarget = Number(e.target.value);
+                              setGoals(prev =>
+                                prev.map(g =>
+                                  g.id === goal.id ? { ...g, target: newTarget } : g
+                                )
+                              );
+                            }}
+                            className="w-full accent-emerald-500"
+                          />
+
+                          <span className="w-8 text-right text-gray-700 text-sm">
+                            {goal.target}
+                          </span>
+                        </div>
+
+                      </div>
+
+                    </div>
+
 
                     <p className="text-xs text-gray-400 mt-1">
                       Deadline: {deadlineDate.toLocaleDateString()}
@@ -395,6 +436,61 @@ hover:tracking-wide"              >
             </div>
           </section>
 
+          {/* ACHIEVEMENT BADGES */}
+          <section className="bg-white rounded-2xl shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+              Achievements
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+              {/* STREAK BADGE */}
+              <div className={`rounded-xl p-6 text-center border transition-all ${user.streak >= 7 ? "bg-yellow-50 border-yellow-400" : "bg-gray-50 opacity-50"
+                }`}>
+                <div className="text-3xl mb-2">🔥</div>
+                <h3 className="font-semibold">7-Day Streak</h3>
+                <p className="text-xs text-gray-500 mt-2">
+                  Maintain 7 days streak
+                </p>
+              </div>
+
+              {/* HIGH SCORE BADGE */}
+              <div className={`rounded-xl p-6 text-center border transition-all ${user.assessmentScore >= 80 ? "bg-green-50 border-green-400" : "bg-gray-50 opacity-50"
+                }`}>
+                <div className="text-3xl mb-2">🏆</div>
+                <h3 className="font-semibold">High Performer</h3>
+                <p className="text-xs text-gray-500 mt-2">
+                  Score 80+ in assessment
+                </p>
+              </div>
+
+              {/* GOAL COMPLETION BADGE */}
+              <div className={`rounded-xl p-6 text-center border transition-all ${goals.filter(g => g.current >= g.target).length >= 1
+                  ? "bg-blue-50 border-blue-400"
+                  : "bg-gray-50 opacity-50"
+                }`}>
+                <div className="text-3xl mb-2">🎯</div>
+                <h3 className="font-semibold">Goal Achiever</h3>
+                <p className="text-xs text-gray-500 mt-2">
+                  Complete 1 goal
+                </p>
+              </div>
+
+              {/* SKILL LEVEL BADGE */}
+              <div className={`rounded-xl p-6 text-center border transition-all ${user.skillLevel === "Advanced"
+                  ? "bg-purple-50 border-purple-400"
+                  : "bg-gray-50 opacity-50"
+                }`}>
+                <div className="text-3xl mb-2">🚀</div>
+                <h3 className="font-semibold">Advanced Speaker</h3>
+                <p className="text-xs text-gray-500 mt-2">
+                  Reach Advanced level
+                </p>
+              </div>
+
+            </div>
+          </section>
+
         </main>
       </PageBackground>
 
@@ -411,7 +507,27 @@ hover:tracking-wide"              >
       )}
 
       {isAddGoalOpen && (
-        <AddGoalModal onClose={() => setIsAddGoalOpen(false)} />
+        <AddGoalModal
+          onClose={() => setIsAddGoalOpen(false)}
+          onAdd={(newGoal: any) => {
+            if (goals.length >= 3) {
+              toast.error("You can only add up to 3 goals.");
+              return;
+            }
+
+            setGoals(prev => [
+              ...prev,
+              {
+                id: Date.now(),
+                current: 0,
+                ...newGoal
+              }
+            ]);
+
+            toast.success("Goal added successfully!");
+            setIsAddGoalOpen(false);
+          }}
+        />
       )}
 
       {isLanguageOpen && (
@@ -455,12 +571,97 @@ hover:tracking-wide"              >
             </button>
 
           </div>
+
         </div>
       )}
 
+      {editingGoal && (
+        <div
+          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+          onClick={() => setEditingGoal(null)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl w-[420px] p-6 space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-semibold">Edit Goal</h3>
+
+            <div>
+              <label className="text-sm text-gray-600">Title</label>
+              <input
+                type="text"
+                value={editingGoal.title}
+                onChange={(e) =>
+                  setEditingGoal({
+                    ...editingGoal,
+                    title: e.target.value,
+                  })
+                }
+                className="w-full border rounded-lg px-3 py-2 mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm text-gray-600">Target</label>
+              <input
+                type="number"
+                value={editingGoal.target}
+                onChange={(e) =>
+                  setEditingGoal({
+                    ...editingGoal,
+                    target: Number(e.target.value),
+                  })
+                }
+                className="w-full border rounded-lg px-3 py-2 mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm text-gray-600">Deadline</label>
+              <input
+                type="date"
+                value={editingGoal.deadline}
+                onChange={(e) =>
+                  setEditingGoal({
+                    ...editingGoal,
+                    deadline: e.target.value,
+                  })
+                }
+                className="w-full border rounded-lg px-3 py-2 mt-1"
+              />
+            </div>
+
+            <div className="flex justify-end gap-3 pt-4">
+              <button
+                onClick={() => setEditingGoal(null)}
+                className="px-4 py-2 bg-gray-100 rounded-lg"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={() => {
+                  setGoals((prev) =>
+                    prev.map((g) =>
+                      g.id === editingGoal.id ? editingGoal : g
+                    )
+                  );
+                  setEditingGoal(null);
+                  toast.success("Goal updated successfully!");
+                }}
+                className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
+
+
 };
 
 
