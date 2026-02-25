@@ -17,13 +17,13 @@ const team = [
         image: team1,
     },
     {
-        name: "Anjana Idumuni",
+        name: "Anjana Indumuni",
         role: "Project Manager & FullStack Developer",
         initials: "AI",
         image: team2,
     },
     {
-        name: "Himath Randil",
+        name: "Himeth Randil",
         role: "FullStack Developer",
         initials: "HR",
         image: team5,
@@ -62,7 +62,7 @@ const MeetOurTeam: React.FC = () => {
                         <span className="w-1.5 h-1.5 rounded-full bg-[#1a9e6b] animate-pulse"></span>
                         Our Experts
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
                         Meet the <span className="text-[#1a9e6b]">Orato</span> Team
                     </h2>
                     <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">

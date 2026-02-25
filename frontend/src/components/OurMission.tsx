@@ -1,14 +1,14 @@
 import React from "react";
-import { FaGlobeAmericas, FaBookReader, FaUserFriends, FaChartLine } from "react-icons/fa";
+import { FaGlobeAmericas, FaBookReader, FaUserFriends, FaChartLine, FaStar } from "react-icons/fa";
 
 /**
  * Statistics data to be displayed in the mission section.
  */
 const stats = [
-    { value: "5M+", label: "Active Learners", icon: <FaUserFriends size={20} /> },
-    { value: "25+", label: "Languages", icon: <FaGlobeAmericas size={20} /> },
-    { value: "10K+", label: "Lessons", icon: <FaBookReader size={20} /> },
-    { value: "15+", label: "Countries", icon: <FaChartLine size={20} /> },
+    { value: "12 Min", label: "Avg. Daily Practice", icon: <FaUserFriends size={20} /> },
+    { value: "1.8M+", label: "Conversations Practiced", icon: <FaGlobeAmericas size={20} /> },
+    { value: "87K+", label: "Careers Advanced", icon: <FaBookReader size={20} /> },
+    { value: "4.9", hasStar: true, label: "Learner Satisfaction", icon: <FaChartLine size={20} /> },
 ];
 
 /**
@@ -19,7 +19,7 @@ const OurMission: React.FC = () => {
     return (
         <section className="relative py-24 px-6 md:px-10 overflow-hidden bg-[#f8fffe]">
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="flex flex-col xl:flex-row gap-16 items-stretch">
+                <div className="flex flex-col lg:flex-row gap-16 items-stretch">
 
                     {/* Left Side: Content & Image Overlap */}
                     <div className="flex-1 relative">
@@ -29,8 +29,8 @@ const OurMission: React.FC = () => {
                                 Our Infinite Purpose
                             </div>
 
-                            <h2 className="text-5xl md:text-7xl font-black text-[#0d2d2a] tracking-tight leading-[1.1] mb-10">
-                                Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a9e6b] via-[#0dd68a] to-[#14c781]">Mission</span>
+                            <h2 className="text-4xl md:text-5xl font-black text-[#0d2d2a] tracking-tight leading-[1.1] mb-10">
+                                Our <span className="text-[#1a9e6b]">Mission</span>
                             </h2>
 
                             <div className="space-y-8 text-lg">
@@ -52,16 +52,16 @@ const OurMission: React.FC = () => {
                     </div>
 
                     {/* Right Side: Luxury Stats Cards */}
-                    <div className="xl:w-[450px] shrink-0">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1 gap-6 relative">
+                    <div className="lg:w-[600px] xl:w-[700px] shrink-0">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 relative">
 
                             {/* Floating decorative card */}
-                            <div className="hidden xl:block absolute -left-20 top-1/2 -translate-y-1/2 w-40 h-80 border border-[#1a9e6b]/10 rounded-[4rem] -z-0 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-[2px]" />
+                            <div className="hidden lg:block absolute -left-20 top-1/2 -translate-y-1/2 w-40 h-80 border border-[#1a9e6b]/10 rounded-[4rem] -z-0 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-[2px]" />
 
                             {stats.map((s) => (
                                 <div
                                     key={s.label}
-                                    className="group relative bg-white/80 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/60 shadow-[0_10px_40px_rgba(26,158,107,0.05)] hover:shadow-[0_25px_60px_rgba(26,158,107,0.1)] transition-all duration-700 flex flex-col items-center xl:flex-row xl:items-start gap-6 hover:-translate-y-2 overflow-hidden"
+                                    className="group relative bg-white/80 backdrop-blur-md rounded-[2.5rem] p-6 md:p-8 border border-white/60 shadow-[0_10px_40px_rgba(26,158,107,0.05)] hover:shadow-[0_25px_60px_rgba(26,158,107,0.1)] transition-all duration-700 flex flex-col items-center gap-4 md:gap-6 hover:-translate-y-2 overflow-hidden"
                                 >
                                     {/* Animated background gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-[#1a9e6b]/0 via-transparent to-[#0dd68a]/0 group-hover:from-[#1a9e6b]/5 group-hover:to-[#0dd68a]/5 transition-all duration-700" />
@@ -73,9 +73,14 @@ const OurMission: React.FC = () => {
                                         </div>
                                     </div>
 
-                                    <div className="relative z-10 text-center xl:text-left">
-                                        <div className="text-3xl font-black text-[#0d2d2a] mb-1">
+                                    <div className="relative z-10 text-center lg:text-left">
+                                        <div className="text-3xl font-black text-[#0d2d2a] mb-1 flex items-center justify-center lg:justify-start gap-1">
                                             {s.value}
+                                            {s.hasStar && (
+                                                <span className="text-yellow-400 mb-1">
+                                                    <FaStar size={20} />
+                                                </span>
+                                            )}
                                         </div>
                                         <div className="text-sm font-bold text-[#1a9e6b] uppercase tracking-widest opacity-80">
                                             {s.label}
@@ -93,7 +98,7 @@ const OurMission: React.FC = () => {
 
             {/* Final bottom accent */}
             <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#1a9e6b]/20 to-transparent" />
-        </section>
+        </section >
     );
 };
 

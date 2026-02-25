@@ -27,7 +27,7 @@ const features = [
 
 const WhatMakesUsDifferent: React.FC = () => {
     return (
-        <section className="bg-[#f8fffe] py-24 px-10">
+        <section className="bg-[#f8fffe] py-16 md:py-24 px-6 md:px-10">
             <div className="max-w-6xl mx-auto">
 
                 {/* Section Header */}
@@ -36,7 +36,7 @@ const WhatMakesUsDifferent: React.FC = () => {
                         <span className="w-1.5 h-1.5 rounded-full bg-[#1a9e6b] animate-pulse"></span>
                         The Orato Difference
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black text-[#0d2d2a] tracking-tight">
+                    <h2 className="text-3xl md:text-5xl font-black text-[#0d2d2a] tracking-tight">
                         What Makes Us <span className="text-[#1a9e6b]">Different</span>
                     </h2>
                     <div className="mt-6 mx-auto w-12 h-1 rounded-full bg-gradient-to-r from-[#1a9e6b] to-[#0dd68a]"></div>
