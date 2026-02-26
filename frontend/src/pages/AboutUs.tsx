@@ -69,12 +69,6 @@ const AboutUs: React.FC = () => {
                 >
                   Join Us
                 </button>
-                <button
-                  onClick={() => navigate('/signup')}
-                  className="px-8 py-3 bg-[#1a9e6b] text-white font-bold rounded-xl hover:bg-[#14c781] transition-all duration-300"
-                >
-                  Live Chat
-                </button>
               </div>
             </div>
           </div>
