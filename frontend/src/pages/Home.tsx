@@ -5,17 +5,21 @@ import welcomeBg from "../assets/welcome-bg.jpg";
 import ctaImage from "../assets/cta-image.jpg";
 
 const Home = () => {
+  //  Toggle between website mode and landing page mode
+  const isLandingPageMode = false; // Will set to true when we need landing page mode
+
   return (
     <div className="min-h-screen">
       
-      {/* Use existing Navbar component */}
-      <Navbar isLoggedIn={false} />
+      {/*  CONDITIONAL: Only show Navbar in website mode */}
+      {!isLandingPageMode && <Navbar isLoggedIn={false} />}
 
       {/* Welcome Section with Background Image */}
       <div 
         className="relative h-screen bg-cover bg-center bg-no-repeat flex items-center"
         style={{ backgroundImage: `url(${welcomeBg})` }}
       >
+        {/* ... rest of your existing code ... */}
         {/* Gradient Overlay - Stronger on right, transparent on left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/50 to-black/70"></div>
         
@@ -687,8 +691,8 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Use existing Footer component */}
-      <Footer />
+      {/*  CONDITIONAL: Only show Footer in website mode */}
+      {!isLandingPageMode && <Footer />}
 
     </div>
   );
