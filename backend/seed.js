@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Card from './src/models/Card.js';
+import Card from './src/models/card.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
