@@ -11,6 +11,7 @@ import DailyChallenges from "../components/DailyChallenges";
 import SkillProgress from "../components/SkillProgress";
 import RecentAchievements from "../components/RecentAchievements";
 import SpeakingCoach from "../components/SpeakingCoach";
+import VisualCards from "../components/VisualCards";
 
 const Dashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -65,6 +66,7 @@ const Dashboard: React.FC = () => {
             <div className="space-y-6">
               <SkillProgress />
               <RecentAchievements />
+              <VisualCards />
             </div>
           </div>
         </main>
