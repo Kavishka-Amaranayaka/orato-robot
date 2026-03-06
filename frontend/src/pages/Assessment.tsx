@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/logo.png";
 
-const API = "http://localhost:5002/api/assessment";
+const API = "http://localhost:5001/api/assessment";
 
 interface Option {
   id: string;
@@ -203,10 +203,10 @@ const Assessment = () => {
               {/* Category Badge */}
               <div className="flex items-center gap-2 mb-4">
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold ${currentQuestion.difficulty === 'beginner'
-                    ? 'bg-green-100 text-green-700'
-                    : currentQuestion.difficulty === 'intermediate'
-                      ? 'bg-yellow-100 text-yellow-700'
-                      : 'bg-red-100 text-red-700'
+                  ? 'bg-green-100 text-green-700'
+                  : currentQuestion.difficulty === 'intermediate'
+                    ? 'bg-yellow-100 text-yellow-700'
+                    : 'bg-red-100 text-red-700'
                   }`}>
                   {currentQuestion.difficulty.charAt(0).toUpperCase() + currentQuestion.difficulty.slice(1)}
                 </span>
@@ -227,14 +227,14 @@ const Assessment = () => {
                     key={option.id}
                     onClick={() => handleAnswerSelect(currentQuestion.questionId, option.id)}
                     className={`w-full p-4 text-left border-2 rounded-xl transition-all ${selectedAnswer === option.id
-                        ? 'border-green-500 bg-green-50 text-green-700'
-                        : 'border-gray-200 hover:border-green-300 hover:bg-green-50'
+                      ? 'border-green-500 bg-green-50 text-green-700'
+                      : 'border-gray-200 hover:border-green-300 hover:bg-green-50'
                       }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${selectedAnswer === option.id
-                          ? 'border-green-500 bg-green-500'
-                          : 'border-gray-300'
+                        ? 'border-green-500 bg-green-500'
+                        : 'border-gray-300'
                         }`}>
                         {selectedAnswer === option.id && (
                           <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -255,8 +255,8 @@ const Assessment = () => {
                   onClick={handlePrevious}
                   disabled={currentQuestionIndex === 0}
                   className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${currentQuestionIndex === 0
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'border-2 border-gray-300 text-gray-700 hover:bg-gray-50'
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'border-2 border-gray-300 text-gray-700 hover:bg-gray-50'
                     }`}
                 >
                   ← Previous
@@ -286,10 +286,10 @@ const Assessment = () => {
                   <div
                     key={index}
                     className={`w-2 h-2 rounded-full transition-all ${index === currentQuestionIndex
-                        ? 'bg-green-600 w-8'
-                        : answers[questions[index].questionId]
-                          ? 'bg-green-400'
-                          : 'bg-gray-300'
+                      ? 'bg-green-600 w-8'
+                      : answers[questions[index].questionId]
+                        ? 'bg-green-400'
+                        : 'bg-gray-300'
                       }`}
                   />
                 ))}

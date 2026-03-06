@@ -170,10 +170,10 @@ const PersonalInfo = () => {
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => setLearningGoal("travel")}
-                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "travel"
-                    ? "border-green-500 bg-green-50 text-green-700"
-                    : "border-gray-200 hover:border-green-300"
+                onClick={() => setLearningGoal("Travel")}
+                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "Travel"
+                  ? "border-green-500 bg-green-50 text-green-700"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="text-3xl mb-2">✈️</div>
@@ -183,10 +183,10 @@ const PersonalInfo = () => {
 
               <button
                 type="button"
-                onClick={() => setLearningGoal("career")}
-                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "career"
-                    ? "border-green-500 bg-green-50 text-green-700"
-                    : "border-gray-200 hover:border-green-300"
+                onClick={() => setLearningGoal("Career")}
+                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "Career"
+                  ? "border-green-500 bg-green-50 text-green-700"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="text-3xl mb-2">💼</div>
@@ -196,10 +196,10 @@ const PersonalInfo = () => {
 
               <button
                 type="button"
-                onClick={() => setLearningGoal("education")}
-                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "education"
-                    ? "border-green-500 bg-green-50 text-green-700"
-                    : "border-gray-200 hover:border-green-300"
+                onClick={() => setLearningGoal("Education")}
+                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "Education"
+                  ? "border-green-500 bg-green-50 text-green-700"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="text-3xl mb-2">📚</div>
@@ -209,10 +209,10 @@ const PersonalInfo = () => {
 
               <button
                 type="button"
-                onClick={() => setLearningGoal("personal")}
-                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "personal"
-                    ? "border-green-500 bg-green-50 text-green-700"
-                    : "border-gray-200 hover:border-green-300"
+                onClick={() => setLearningGoal("Personal")}
+                className={`p-4 border-2 rounded-xl transition-all ${learningGoal === "Personal"
+                  ? "border-green-500 bg-green-50 text-green-700"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="text-3xl mb-2">🎯</div>
@@ -232,8 +232,8 @@ const PersonalInfo = () => {
                 type="button"
                 onClick={() => setDailyGoalMinutes(5)}
                 className={`w-full p-4 border-2 rounded-xl flex items-center justify-between transition-all ${dailyGoalMinutes === 5
-                    ? "border-green-500 bg-green-50"
-                    : "border-gray-200 hover:border-green-300"
+                  ? "border-green-500 bg-green-50"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="flex items-center gap-3">
@@ -252,8 +252,8 @@ const PersonalInfo = () => {
                 type="button"
                 onClick={() => setDailyGoalMinutes(15)}
                 className={`w-full p-4 border-2 rounded-xl flex items-center justify-between transition-all ${dailyGoalMinutes === 15
-                    ? "border-green-500 bg-green-50"
-                    : "border-gray-200 hover:border-green-300"
+                  ? "border-green-500 bg-green-50"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="flex items-center gap-3">
@@ -272,8 +272,8 @@ const PersonalInfo = () => {
                 type="button"
                 onClick={() => setDailyGoalMinutes(30)}
                 className={`w-full p-4 border-2 rounded-xl flex items-center justify-between transition-all ${dailyGoalMinutes === 30
-                    ? "border-green-500 bg-green-50"
-                    : "border-gray-200 hover:border-green-300"
+                  ? "border-green-500 bg-green-50"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="flex items-center gap-3">
@@ -292,8 +292,8 @@ const PersonalInfo = () => {
                 type="button"
                 onClick={() => setDailyGoalMinutes(60)}
                 className={`w-full p-4 border-2 rounded-xl flex items-center justify-between transition-all ${dailyGoalMinutes === 60
-                    ? "border-green-500 bg-green-50"
-                    : "border-gray-200 hover:border-green-300"
+                  ? "border-green-500 bg-green-50"
+                  : "border-gray-200 hover:border-green-300"
                   }`}
               >
                 <div className="flex items-center gap-3">
