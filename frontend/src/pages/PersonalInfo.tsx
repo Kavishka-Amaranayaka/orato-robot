@@ -170,9 +170,9 @@ const PersonalInfo = () => {
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => setLearningGoal("Travel")}
+                onClick={() => setLearningGoal("travel")}
                 className={`p-4 border-2 rounded-xl transition-all ${
-                  learningGoal === "Travel"
+                  learningGoal === "travel"
                     ? "border-green-500 bg-green-50 text-green-700"
                     : "border-gray-200 hover:border-green-300"
                 }`}
@@ -184,9 +184,9 @@ const PersonalInfo = () => {
 
               <button
                 type="button"
-                onClick={() => setLearningGoal("Career")}
+                onClick={() => setLearningGoal("career")}
                 className={`p-4 border-2 rounded-xl transition-all ${
-                  learningGoal === "Career"
+                  learningGoal === "career"
                     ? "border-green-500 bg-green-50 text-green-700"
                     : "border-gray-200 hover:border-green-300"
                 }`}
@@ -198,9 +198,9 @@ const PersonalInfo = () => {
 
               <button
                 type="button"
-                onClick={() => setLearningGoal("Education")}
+                onClick={() => setLearningGoal("education")}
                 className={`p-4 border-2 rounded-xl transition-all ${
-                  learningGoal === "Education"
+                  learningGoal === "education"
                     ? "border-green-500 bg-green-50 text-green-700"
                     : "border-gray-200 hover:border-green-300"
                 }`}
@@ -212,9 +212,9 @@ const PersonalInfo = () => {
 
               <button
                 type="button"
-                onClick={() => setLearningGoal("Personal")}
+                onClick={() => setLearningGoal("personal")}
                 className={`p-4 border-2 rounded-xl transition-all ${
-                  learningGoal === "Personal"
+                  learningGoal === "personal"
                     ? "border-green-500 bg-green-50 text-green-700"
                     : "border-gray-200 hover:border-green-300"
                 }`}
